@@ -1,13 +1,16 @@
 import React from "react";
 import { Text } from "react-native";
+import { Header, Footer } from "../../components";
 
-import { Container } from "./styles";
+import * as S from "./styles";
 
 const Home: React.FC = () => {
   return (
-    <Container>
+    <S.Container>
+      <Header />
       <Text>Open up App.tsx to start working on your app!</Text>
-    </Container>
+      <Footer />
+    </S.Container>
   );
 };
 
