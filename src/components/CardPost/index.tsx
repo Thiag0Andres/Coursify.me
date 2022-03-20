@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { SCREEN } from "../../routes/constant/route-name";
 import api from "../../services/axios";
 
 import * as S from "./styles";
@@ -7,7 +9,7 @@ interface Props {
   id: number;
 }
 
-interface IPost {
+export interface IPost {
   id: number;
   title: {
     rendered: string;
@@ -22,14 +24,15 @@ interface IPost {
 }
 
 const CardPost: React.FC<Props> = ({ id }: Props) => {
+  const navigation = useNavigation();
   const [post, setPost] = useState<IPost>();
   const [postImage, setPostImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getPostImage = useCallback((id: string) => {
+  const getPostImage = useCallback((postId: number) => {
     setLoading(true);
     api
-      .get(`/media/${id}`)
+      .get(`/media/${postId}`)
       .then((response) => {
         if (response.status === 200) {
           setPostImage(response.data.guid.rendered);
@@ -61,9 +64,16 @@ const CardPost: React.FC<Props> = ({ id }: Props) => {
     getPost();
   }, [getPost]);
 
+  const handleReadMore = () => {
+    navigation.navigate(SCREEN.INFORMATIVECONTENT, {
+      post: post,
+      media: postImage,
+    });
+  };
+
   return (
     <>
-      {post && postImage && (
+      {post && postImage !== "" && (
         <S.Container>
           <S.Image
             source={{
@@ -71,13 +81,11 @@ const CardPost: React.FC<Props> = ({ id }: Props) => {
             }}
           />
           <S.Content>
-            <S.TitleCard numberOfLines={2}>
-              {post ? post.title.rendered : ""}
-            </S.TitleCard>
+            <S.TitleCard numberOfLines={2}>{post.title.rendered}</S.TitleCard>
             <S.TextCard numberOfLines={4}>
-              {post ? post.content.rendered.replace(/<\/?[^>]+(>|$)/g, "") : ""}
+              {post.content.rendered.replace(/<\/?[^>]+(>|$)/g, "")}
             </S.TextCard>
-            <S.Button>
+            <S.Button onPress={handleReadMore}>
               <S.ButtonText>Leia mais</S.ButtonText>
             </S.Button>
           </S.Content>

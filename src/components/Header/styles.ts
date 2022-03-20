@@ -1,5 +1,7 @@
 import styled from "styled-components/native";
-import logo from "../../assets/images/logo-2.png";
+import logo from "../../assets/images/logo.png";
+import arrowIcon from "../../assets/icons/arrow-left.png";
+import menuIcon from "../../assets/icons/menu.png";
 
 export const Container = styled.SafeAreaView`
   flex-direction: row;
@@ -13,10 +15,29 @@ export const Container = styled.SafeAreaView`
   elevation: 5;
 `;
 
-export const MenuButton = styled.TouchableOpacity`
+export const GoBackButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+`;
+
+export const GobackIcon = styled.Image.attrs({
+  source: arrowIcon,
+})``;
+
+export const GoBackText = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 8px;
+  color: ${({ theme }) => theme.colors.grey};
+`;
+
+export const MenuIcon = styled.Image.attrs({
+  source: menuIcon,
+})`
+  width: 37px;
+  height: 37px;
+  tint-color: ${(props) => props.theme.colors.blue};
 `;
 
 export const Logo = styled.Image.attrs({

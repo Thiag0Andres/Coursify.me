@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-
-import api from "../../services/axios";
 import CardPost from "../CardPost";
+import api from "../../services/axios";
 
 import * as S from "./styles";
 
