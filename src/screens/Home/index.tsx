@@ -1,14 +1,52 @@
-import React from "react";
-import { Text } from "react-native";
-import { Header, Footer } from "../../components";
+import React, { useCallback, useEffect, useState } from "react";
+import { View } from "react-native";
+import { Header, Footer, ListingPosts } from "../../components";
+import api from "../../services/axios";
 
 import * as S from "./styles";
 
+interface ICategory {
+  id: number;
+  name: string;
+  description: string;
+  count: number;
+}
+
 const Home: React.FC = () => {
+  const [categories, setCategories] = useState<Array<ICategory>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const getCategories = useCallback(() => {
+    setLoading(true);
+    api
+      .get(`/categories`)
+      .then((response) => {
+        if (response.status === 200) {
+          setCategories(response.data);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
+
   return (
     <S.Container>
       <Header />
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <S.Content>
+        {categories &&
+          categories.map((item: ICategory) => (
+            <View key={item.id}>
+              <S.TitleCategory>{item.name}</S.TitleCategory>
+              <ListingPosts id={item.id} />
+            </View>
+          ))}
+      </S.Content>
       <Footer />
     </S.Container>
   );
