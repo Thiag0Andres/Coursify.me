@@ -10,11 +10,17 @@ export const Container = styled.View`
 export const Content = styled.ScrollView`
   flex: 1;
   width: 100%;
-  margin: 46px 0 59px 0;
+`;
+
+export const ContentCategories = styled.View`
+  flex: 1;
+  width: 100%;
+  padding-bottom: 59px;
   padding-horizontal: 15px;
 `;
 
 export const TitleCategory = styled.Text`
+  margin: 43px 0 28px 0;
   font: normal normal bold 22px/27px Roboto;
   text-align: left;
   letter-spacing: 0px;

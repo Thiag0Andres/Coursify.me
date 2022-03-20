@@ -39,15 +39,17 @@ const Home: React.FC = () => {
     <S.Container>
       <Header />
       <S.Content>
-        {categories &&
-          categories.map((item: ICategory) => (
-            <View key={item.id}>
-              <S.TitleCategory>{item.name}</S.TitleCategory>
-              <ListingPosts id={item.id} />
-            </View>
-          ))}
+        <S.ContentCategories>
+          {categories &&
+            categories.map((item: ICategory) => (
+              <View key={item.id}>
+                <S.TitleCategory>{item.name}</S.TitleCategory>
+                <ListingPosts id={item.id} />
+              </View>
+            ))}
+        </S.ContentCategories>
+        <Footer />
       </S.Content>
-      <Footer />
     </S.Container>
   );
 };
