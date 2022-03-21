@@ -5,10 +5,6 @@ import api from "../../services/axios";
 
 import * as S from "./styles";
 
-interface Props {
-  id: number;
-}
-
 export interface IPost {
   id: number;
   title: {
@@ -20,12 +16,15 @@ export interface IPost {
   excerpt: {
     rendered: string;
   };
-  featured_media: string;
+  featured_media: number;
 }
 
-const CardPost: React.FC<Props> = ({ id }: Props) => {
+interface Props {
+  data: IPost;
+}
+
+const CardPost: React.FC<Props> = ({ data }: Props) => {
   const navigation = useNavigation();
-  const [post, setPost] = useState<IPost>();
   const [postImage, setPostImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -44,36 +43,22 @@ const CardPost: React.FC<Props> = ({ id }: Props) => {
       });
   }, []);
 
-  const getPost = useCallback(() => {
-    setLoading(true);
-    api
-      .get(`/posts/${id}`)
-      .then((response) => {
-        if (response.status === 200) {
-          setPost(response.data);
-          getPostImage(response.data.featured_media);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
-  }, []);
-
   useEffect(() => {
-    getPost();
-  }, [getPost]);
+    getPostImage(data.featured_media);
+  }, [getPostImage]);
+
+  console.log(data.featured_media);
 
   const handleReadMore = () => {
     navigation.navigate(SCREEN.INFORMATIVECONTENT, {
-      post: post,
+      post: data,
       media: postImage,
     });
   };
 
   return (
     <>
-      {post && postImage !== "" && (
+      {!loading && data && postImage !== "" && (
         <S.Container>
           <S.Image
             source={{
@@ -81,9 +66,9 @@ const CardPost: React.FC<Props> = ({ id }: Props) => {
             }}
           />
           <S.Content>
-            <S.TitleCard numberOfLines={2}>{post.title.rendered}</S.TitleCard>
+            <S.TitleCard numberOfLines={2}>{data.title.rendered}</S.TitleCard>
             <S.TextCard numberOfLines={4}>
-              {post.content.rendered.replace(/<\/?[^>]+(>|$)/g, "")}
+              {data.content.rendered.replace(/<\/?[^>]+(>|$)/g, "")}
             </S.TextCard>
             <S.Button onPress={handleReadMore}>
               <S.ButtonText>Leia mais</S.ButtonText>

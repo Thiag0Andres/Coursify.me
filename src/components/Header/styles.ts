@@ -8,11 +8,12 @@ export const Container = styled.SafeAreaView`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 64px;
-  margin-top: 24px;
+  height: 74px;
+  margin-top: 30px;
   padding-horizontal: 17px;
   background-color: ${({ theme }) => theme.colors.white};
-  elevation: 5;
+  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-width: 1px;
 `;
 
 export const GoBackButton = styled.TouchableOpacity`

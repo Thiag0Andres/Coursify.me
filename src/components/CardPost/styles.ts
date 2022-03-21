@@ -7,12 +7,13 @@ export const Container = styled.View`
   border-radius: 12px;
   margin-right: 38px;
   overflow: hidden;
-  elevation: 5;
+  elevation: 2;
+  margin-bottom: 10px;
 `;
 
 export const Content = styled.View`
   flex: 1;
-  padding: 15px 0 0 10px;
+  padding: 15px 10px 0 10px;
 `;
 
 export const Image = styled.Image`
@@ -22,8 +23,7 @@ export const Image = styled.Image`
 
 export const TitleCard = styled.Text`
   width: 187px;
-  height: 44px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   font: normal normal bold 17px/24px Roboto;
   text-align: left;
   letter-spacing: 0px;

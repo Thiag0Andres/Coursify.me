@@ -20,9 +20,13 @@ export const ContentCategories = styled.View`
 `;
 
 export const TitleCategory = styled.Text`
-  margin: 43px 0 28px 0;
+  margin: 33px 0 28px 0;
   font: normal normal bold 22px/27px Roboto;
   text-align: left;
   letter-spacing: 0px;
   color: ${({ theme }) => theme.colors.green2};
+`;
+
+export const ContentList = styled.ScrollView`
+  flex: 1;
 `;

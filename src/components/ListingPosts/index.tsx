@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import CardPost from "../CardPost";
+import { CardPost, LoadingIndicator } from "..";
 import api from "../../services/axios";
 
 import * as S from "./styles";
@@ -15,7 +15,7 @@ const ListingPosts: React.FC<Props> = ({ id }: Props) => {
   const getPosts = useCallback(() => {
     setLoading(true);
     api
-      .get(`/posts?categories=${id}`)
+      .get(`/posts?categories=${id}&per_page=5`)
       .then((response) => {
         if (response.status === 200) {
           setPosts(response.data);
@@ -41,7 +41,7 @@ const ListingPosts: React.FC<Props> = ({ id }: Props) => {
       showsHorizontalScrollIndicator={false}
     >
       {posts &&
-        posts.map((item: any) => <CardPost key={item.id} id={item.id} />)}
+        posts.map((item: any) => <CardPost key={item.id} data={item} />)}
     </S.ContentList>
   );
 };
