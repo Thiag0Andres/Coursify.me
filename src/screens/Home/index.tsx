@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
-import { Header, Footer, ListingPosts } from "../../components";
+import { Header, Footer } from "../../components";
+import ListingPosts from "../../components/ListingPosts";
 import api from "../../services/axios";
 
 import * as S from "./styles";
@@ -19,14 +20,20 @@ const Home: React.FC = () => {
   const getCategories = useCallback(() => {
     setLoading(true);
     api
-      .get(`/categories`)
+      .get(`/categories`, {
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
       .then((response) => {
         if (response.status === 200) {
           setCategories(response.data);
-          setLoading(false);
         }
       })
       .catch((err) => {
+        setLoading(false);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, []);
@@ -40,7 +47,8 @@ const Home: React.FC = () => {
       <Header />
       <S.Content>
         <S.ContentCategories>
-          {categories &&
+          {!loading &&
+            categories &&
             categories.map((item: ICategory) => (
               <View key={item.id}>
                 <S.TitleCategory>{item.name}</S.TitleCategory>

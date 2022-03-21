@@ -47,8 +47,6 @@ const CardPost: React.FC<Props> = ({ data }: Props) => {
     getPostImage(data.featured_media);
   }, [getPostImage]);
 
-  console.log(data.featured_media);
-
   const handleReadMore = () => {
     navigation.navigate(SCREEN.INFORMATIVECONTENT, {
       post: data,

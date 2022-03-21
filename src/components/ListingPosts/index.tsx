@@ -15,14 +15,18 @@ const ListingPosts: React.FC<Props> = ({ id }: Props) => {
   const getPosts = useCallback(() => {
     setLoading(true);
     api
-      .get(`/posts?categories=${id}&per_page=5`)
+      .get(`/posts?categories=${id}&per_page=5`, {
+        headers: { "Content-type": "application/json" },
+      })
       .then((response) => {
         if (response.status === 200) {
           setPosts(response.data);
-          setLoading(false);
         }
       })
       .catch((err) => {
+        setLoading(false);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, []);
@@ -32,17 +36,15 @@ const ListingPosts: React.FC<Props> = ({ id }: Props) => {
   }, [getPosts]);
 
   return (
-    <S.ContentList
-      horizontal
-      contentContainerStyle={{
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      showsHorizontalScrollIndicator={false}
-    >
-      {posts &&
-        posts.map((item: any) => <CardPost key={item.id} data={item} />)}
-    </S.ContentList>
+    <>
+      {!loading && (
+        <S.ContentList horizontal showsHorizontalScrollIndicator={false}>
+          {posts.map((item: any) => (
+            <CardPost key={item.id} data={item} />
+          ))}
+        </S.ContentList>
+      )}
+    </>
   );
 };
 

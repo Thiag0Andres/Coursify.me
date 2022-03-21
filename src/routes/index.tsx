@@ -15,7 +15,7 @@ const Routes = () => {
   }, []);
 
   const handleSplashScreen = async () => {
-    // Splash screen will remain visible for 2.5 seconds
+    // Splash screen will remain visible for 3 seconds
     const wait = (time: any) =>
       new Promise((resolve) => setTimeout(resolve, time));
 
